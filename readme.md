@@ -95,6 +95,7 @@ try {
 * [x] [Emails](https://app.smartemailing.cz/docs/api/v3/index.html#api-Emails)
 * [x] [Newsletter](https://app.smartemailing.cz/docs/api/v3/index.html#api-Newsletter)
 * [ ] [Webhooks](https://app.smartemailing.cz/docs/api/v3/index.html#api-Webhooks)
+* [x] [E shops](https://app.smartemailing.cz/docs/api/v3/index.html#api-E_shops) Notifies SmartEmailing about new order in e-shop.
 
 ## Advanced docs
 
@@ -241,7 +242,7 @@ Allows filtering custom fields with multiple filter conditions.
     * byName($value)
     * byType($value)
     * byId($value)
-    
+
 ### Exists
 Runs a search query with name filter and checks if the given name is found in customFields. Returns `false` or the `CustomFields\CustomField`.
 Uses send logic (throws RequestException).
@@ -391,6 +392,32 @@ $bulkCustomSms->setSmsId(5);
 $bulkCustomSms->addTask($task);
 
 $bulkCustomSms->send();
+
+## E_shops - Add Placed order
+
+The E_shops section have two endpoints to set single Order or import orders in bulk.
+
+Example add single order
+```php
+use \SmartEmailing\v3\Request\Eshops\Model\Order;
+use  \SmartEmailing\v3\Request\Eshops\Model\OrderItem;
+use \SmartEmailing\v3\Request\Eshops\Model\Price;
+
+$order = new Order('my-eshop', 'ORDER0001', 'jan.novak@smartemailing.cz');
+$order->orderItems()->add(
+    new OrderItem(
+        'ABC123',   // item Id
+        'My Product', // item name
+        10,          // quantity
+        new Price(
+            100, // without vat
+            121, // with vat
+            'CZK' // currency code
+        ),
+        'https://myeshop.cz/product/ABC123'  // product url
+    )
+);
+$api->eshopOrders()->addOrder($order)->send();
 ```
 
 ## Changelog

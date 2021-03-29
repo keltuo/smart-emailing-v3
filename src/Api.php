@@ -7,6 +7,8 @@ use SmartEmailing\v3\Request\Contactlists\Contactlists;
 use SmartEmailing\v3\Request\Credentials\Credentials;
 use SmartEmailing\v3\Request\CustomFields\CustomFields;
 use SmartEmailing\v3\Request\Email\EmailsEndpoint;
+use SmartEmailing\v3\Request\Eshops\EshopOrders;
+use SmartEmailing\v3\Request\Eshops\EshopOrdersBulk;
 use SmartEmailing\v3\Request\Import\Import;
 use SmartEmailing\v3\Request\Newsletter\Newsletter;
 use SmartEmailing\v3\Request\Ping\Ping;
@@ -104,6 +106,16 @@ class Api
     public function customFields()
     {
         return new CustomFields($this);
+    }
+
+    public function eshopOrders()
+    {
+    	return new EshopOrders($this);
+    }
+
+    public function eshopOrdersBulk()
+    {
+    	return new EshopOrdersBulk($this);
     }
 
 }
